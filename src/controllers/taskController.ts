@@ -139,3 +139,34 @@ export const deleteTask = async (req: any, res: any) => {
     });
   }
 };
+
+export const updateTask = async (req: any, res: any) => {
+  try {
+    const { id } = req.query;
+    const updateData = req.body as Itask;
+    const updatedTask = await taskModel.findByIdAndUpdate(id, updateData, {
+      new: true,
+      runValidators: true,
+    });
+
+    if (!updatedTask) {
+      return res.status(404).json({
+        message: "Task not found",
+        success: false,
+      });
+    }
+
+    return res.status(200).json({
+      message: "Task updated successfully",
+      success: true,
+      task: updatedTask,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      message: "Something went wrong!",
+      success: false,
+      error,
+    });
+  }
+};

@@ -4,6 +4,7 @@ import {
   deleteTask,
   getTask,
   getTaskById,
+  updateTask,
 } from "../controllers/taskController";
 import { Protect } from "../midleware/Protect";
 
@@ -16,5 +17,7 @@ router.get("/getTask", Protect, getTask);
 router.get("/getTaskById", Protect, getTaskById);
 
 router.delete("/deleteTask", Protect, deleteTask);
+
+router.put("/updateTask", Protect, updateTask);
 
 export default router;
