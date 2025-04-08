@@ -11,7 +11,15 @@ interface DecodedToken {
   exp: number;
 }
 
-export const Protect = async (req: any, res: any, next: any) => {
+interface AuthRequest extends Request {
+  user?: any;
+}
+
+export const Protect = async (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+): Promise<any> => {
   try {
     let token;
 
@@ -57,3 +65,12 @@ export const Protect = async (req: any, res: any, next: any) => {
     });
   }
 };
+
+export const restrictTo =
+  (...roles: string[]) =>
+  (req: AuthRequest, res: Response, next: NextFunction): void => {
+    if (!req.user || !roles.includes(req.user.role)) {
+      res.status(403).json({ message: "Forbidden: Access denied" });
+    }
+    next();
+  };

@@ -6,18 +6,18 @@ import {
   getTaskById,
   updateTask,
 } from "../controllers/taskController";
-import { Protect } from "../midleware/Protect";
+import { Protect, restrictTo } from "../midleware/Protect";
 
 const router = Router();
 
-router.post("/createTask", Protect, CreateTask);
+router.post("/createTask", Protect, restrictTo("Admin"), CreateTask);
 
-router.get("/getTask", Protect, getTask);
+router.get("/getTask", Protect, restrictTo("Admin", "Manager"), getTask);
 
-router.get("/getTaskById", Protect, getTaskById);
+router.get("/getTaskById", Protect, restrictTo("User"), getTaskById);
 
-router.delete("/deleteTask", Protect, deleteTask);
+router.delete("/deleteTask", Protect, restrictTo("Admin"), deleteTask);
 
-router.put("/updateTask", Protect, updateTask);
+router.put("/updateTask", Protect, restrictTo("Manager"), updateTask);
 
 export default router;

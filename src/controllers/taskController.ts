@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import taskModel, { Itask } from "../models/taskModel";
 import userModel from "../models/userModel";
 
-export const CreateTask = async (req: any, res: any) => {
+export const CreateTask = async (req: Request, res: Response): Promise<any> => {
   try {
     let {
       title,
@@ -69,7 +69,7 @@ export const CreateTask = async (req: any, res: any) => {
   }
 };
 
-export const getTask = async (req: any, res: any) => {
+export const getTask = async (req: Request, res: Response):Promise<any> => {
   try {
     const { assignedBy } = req.query;
     const Task = await taskModel
@@ -97,7 +97,7 @@ export const getTask = async (req: any, res: any) => {
   }
 };
 
-export const getTaskById = async (req: any, res: any) => {
+export const getTaskById = async (req: Request, res: Response):Promise<any> => {
   try {
     let { id } = req.query;
     const Task = await taskModel.findById(id);
@@ -115,7 +115,7 @@ export const getTaskById = async (req: any, res: any) => {
   }
 };
 
-export const deleteTask = async (req: any, res: any) => {
+export const deleteTask = async (req: Request, res: Response):Promise<any> => {
   try {
     let { id } = req.query;
 
@@ -140,7 +140,7 @@ export const deleteTask = async (req: any, res: any) => {
   }
 };
 
-export const updateTask = async (req: any, res: any) => {
+export const updateTask = async (req: Request, res: Response):Promise<any> => {
   try {
     const { id } = req.query;
     const updateData = req.body as Itask;
